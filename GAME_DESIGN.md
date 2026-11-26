@@ -22,6 +22,16 @@ Lựa chọn ở bến đổi manh mối, tình tiết cuối Khúc dạo và l�
 
 ## Hình ảnh và tải tài nguyên
 
-Tranh nguyên bản mang phong cách Donghua, phối xanh ngọc, vàng đèn lồng và đỏ gạch. Các lớp là nền, bóng chân, nhân vật, dấu tương tác và hiệu ứng có thể giảm chuyển động. Giao diện HTML co giãn theo khung nhìn. Phaser dùng khung vẽ 960 × 540 và giới hạn 30 FPS, dùng WebGL khi có và Canvas khi cần.
+Tranh nguyên bản mang phong cách Donghua, phối xanh ngọc, vàng đèn lồng và đỏ gạch. Các lớp là nền, bóng chân, nhân vật, dấu tương tác và hiệu ứng có thể giảm chuyển động. Giao diện HTML co giãn theo khung nhìn. Phaser dùng hệ tọa độ logic 960 × 540. Kích thước vùng đệm, renderer và giới hạn FPS tùy chế độ bên dưới.
 
 Màn mở đầu lấy nền của chương hiện tại và chân dung dùng chung. Bấm chơi mới tải Phaser, module chương và ảnh cần cho cảnh. Chuyển chương hủy cảnh cũ và tạo cảnh mới. QR tạo ngay trên trình duyệt khi mở Chia sẻ. Game không cần yêu cầu mạng đến dịch vụ bên thứ ba khi chơi bản build.
+
+## Hệ nhập vai V0.5
+
+Bắt đầu hành trình tạo một hồ sơ có tên và xuất thân. Lữ khách có 36 Sinh lực và 3 Linh lực. Hộ sơn thêm 6 Sinh lực. Kiếm đồ thêm 1 sát thương Trảm kích. Hai xuất thân sau có 2 Linh lực. Kinh nghiệm mở cấp 2 ở 60 và cấp 3 ở 140; mỗi cấp thêm 4 Sinh lực tối đa. Khí trong thiết kế ban đầu được hiển thị là Nội lực, tối đa 8.
+
+Tĩnh tức dùng 1 Linh lực để hồi tối đa 5 Nội lực và vẫn mất một lượt. Thuốc hồi tối đa 15 Sinh lực, có thể dùng trong và ngoài trận. Khúc dạo cho 30 EXP khi thắng và 20 khi hoàn thành. Lựa chọn đưa dân qua sông mở thêm thuốc. Lựa chọn đánh lạc hướng nhận kiếm đồng. Việc phụ thắp đèn thêm 20 EXP, 1 thuốc và lời thoại Yên Ly khác. Hộ vệ Vô Danh trảm kích mạnh hơn khi còn 16 Sinh lực trở xuống. Chiến thắng cho 50 EXP. Báo lại cho Yên Ly cho 40 EXP, Kiếm Tàng Phong và hoàn thành điều kiện mở chương sau. Thông số là cân bằng bản chơi thử.
+
+## Tải và cấu hình
+
+Low dùng Canvas 640 × 360, ảnh 768 px và 24 FPS tối đa. Medium dùng 800 × 450, ảnh 1.152 px, 30 FPS và một lớp sương. High dùng 960 × 540, ảnh 1.536 px, 45 FPS tối đa và ba lớp sương. Auto dựa vào bộ nhớ nếu trình duyệt cung cấp, số lõi và loại thiết bị. Nếu liên tục chạy dưới 65% mục tiêu, chất lượng tự hạ khi người chơi đang tự do di chuyển. Đổi cảnh hủy game instance cũ, cảnh, texture và renderer trước khi khởi tạo instance mới.

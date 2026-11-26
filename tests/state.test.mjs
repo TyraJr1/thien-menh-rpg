@@ -56,3 +56,14 @@ test('in-battle saves survive reload, and a defeated player can retry', () => {
   assert.equal(parseSave(JSON.stringify({ ...state, chapter: '__proto__' })), null);
   assert.equal(parseSave('invalid json'), null);
 });
+
+test('v1 saves migrate without erasing the chapter, choices, or active fight', () => {
+  const old = startCombat(atChapter01('resolve', 'compassion'));
+  const { chapter, step, stance, technique, hp, qi, combat } = old;
+  const migrated = parseSave(JSON.stringify({ version: 1, chapter, step, stance, technique, hp, qi, combat }));
+  assert.equal(migrated.version, 2);
+  assert.equal(migrated.profile.name, 'Lữ Khách');
+  assert.equal(migrated.xp, 50);
+  assert.deepEqual(migrated.combat, combat);
+  assert.deepEqual(parseSave(JSON.stringify(migrated)), migrated);
+});

@@ -23,3 +23,9 @@ Nếu hệ thống không có Chromium, cài trình duyệt bằng `npx playwrig
 Kết nối repository làm dự án Pages với nhánh production `main`. Đặt build command là `npm run build`, thư mục đầu ra là `dist` và thư mục gốc là thư mục gốc repository. Bản build dùng Node.js 22 trở lên, có `.node-version` và cấu hình cache tệp có mã băm. Có thể dùng bản preview của nhánh PR để thử trước khi phát hành. Nút **Chia sẻ** lấy URL gốc của trang đang chạy, vì vậy QR trên preview trỏ đến preview.
 
 Xem [thiết kế](GAME_DESIGN.md), [hướng dẫn phát triển](AGENTS.md), [cốt truyện](STORY_BIBLE.md) và [lộ trình](ROADMAP.md).
+
+## V0.5
+
+Tạo nhân vật trước khi vào game. Mở **Túi đồ** để trang bị kiếm và dùng thuốc. Trong **Thiết lập**, chọn Low, Medium, High hoặc Auto và bật âm thanh nếu muốn.
+
+[Nghiệm thu và ảnh game](PROJECT_STATUS.md) · [Ma trận yêu cầu](REQUIREMENTS_MATRIX.md) · [Hiệu năng](PERFORMANCE.md) · [Triển khai Preview trên Cloudflare Pages](DEPLOYMENT.md)

@@ -21,3 +21,11 @@ Lão Chu trao Mộc Ấn trong đêm. Người chơi chọn đưa dân sang bờ
 Yên Ly kể lại hệ quả của lựa chọn ở bến và nhờ Lữ Khách đặt ấn lên bia. Người chơi chọn Sinh Tức hoặc Phá Phong rồi gặp Vô Danh. Hắn nhận ra cách Lữ Khách hoàn thành nét kiếm dở và mở cổng. Yên Ly thấy một ngọn đèn vừa tắt sau cổng và dấu chân còn mới. Cả hai dừng lại trước khi bước vào núi.
 
 Giữ ba câu hỏi để tiếp tục phát triển sau khi thiết kế được chốt. Ai gửi Mộc Ấn? Vì sao lời thề của Vô Danh bị phá? Ai đã vào Tàng Phong trước hai người?
+
+## Bổ sung Phase 2
+
+Lão Chu nhận ra người đưa ấn biết tên Lữ Khách nhưng đã tránh nói thành tiếng. Yên Ly nghe lại tiếng chuông dù dây đã đứt. Ở bia, Lữ Khách vô thức nhớ động tác tay, gợi một quá khứ chưa được gọi tên. Vô Danh nhận ra tua kiếm và đặt lời thề trước sự tin tưởng.
+
+**Gửi một ánh đèn** là việc phụ tại Tàng Phong. Giấy nhắn dưới đèn của một người mẹ nối cảnh sơn môn với những gia đình dưới bến. Nếu thắp đèn, người chơi nhận thuốc và Yên Ly nhắc lại ánh đèn ấy khi nhìn thấy một ngọn khác tắt trong cổng.
+
+Điều kiện kỹ thuật mở Chapter 02 là thắng Vô Danh và hoàn thành lời thoại trở về với Yên Ly. Nhân thân thật của Lữ Khách và nội dung chương sau chờ đối chiếu V3.0.

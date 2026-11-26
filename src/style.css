@@ -155,3 +155,87 @@ dialog > .button { margin-top: 15px; }
   .opening-content .button { font-size: 11px; }
   .chapter-list { grid-template-columns: 1fr; }
 }
+
+/* The chapter art remains the strongest layer; chrome borrows its ink and brass palette. */
+.frame { background: #172721; border-color: #71694e; }
+.stage-header { min-height: 36px; }
+.stage-divider { color: #a7ae99; margin: 0 4px; }
+.viewport { background: #101815; }
+#intro::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid #e2c39354;
+  border-radius: 2px;
+  pointer-events: none;
+}
+.opening-wash { background: linear-gradient(90deg, #071614f0 0%, #0e2420c4 30%, #10242032 64%, transparent 100%), linear-gradient(0deg, #111a15a6, transparent 41%); }
+.opening-content { z-index: 1; }
+.playing .shell { padding-top: 20px; }
+.playing .masthead { margin-bottom: 16px; }
+.playing h1 { font-size: clamp(28px, 3.4vw, 44px); }
+.game-toast { position: absolute; z-index: 2; inset: 12px auto auto 50%; transform: translateX(-50%); max-width: calc(100% - 28px); width: max-content; padding: 7px 12px; background: #12221ef5; border: 1px solid #8a7956; border-radius: 4px; color: #f0d6a4; font-size: 11px; text-align: center; pointer-events: none; }
+.dialogue-card { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 14px; }
+.dialogue-card > div:first-child { grid-column: 1 / -1; }
+.dialogue-portrait { display: block; width: 90px; height: 112px; object-fit: contain; object-position: bottom; border: 1px solid #695d45; border-radius: 6px; background: radial-gradient(ellipse at 50% 38%, #475d4c, #253b32 62%, #172a23); }
+.play-panel { background: linear-gradient(105deg, #27392e, #16251e 75%); }
+.play-panel h3 { margin: 5px 0 7px; }
+.dialogue-line { min-height: 2.8em; }
+.battle-resources { margin-top: 6px; font-size: 11px; }
+.play-panel .battle-resources { color: #b8cdbd; }
+.chapter-reward { color: #efd093 !important; margin-top: 9px; }
+.side-task, .bag-button { margin-top: 10px; width: 100%; }
+.side-task { justify-content: flex-start; text-align: left; }
+.bag-button { justify-content: space-between; }
+.spirit progress { accent-color: #a6a5dd; }
+.spirit progress::-webkit-progress-value { background: #a6a5dd; }
+.identity > div { min-width: 0; overflow-wrap: anywhere; }
+.identity img { flex: 0 0 auto; }
+.identity small + small { margin-top: 1px; }
+dialog { max-height: calc(100dvh - 32px); overflow: auto; }
+dialog input:not([type="radio"]), dialog select { min-height: 42px; border: 1px solid #657462; border-radius: 5px; background: #101f1a; color: #f5eacc; padding: 6px 9px; font: inherit; }
+#quality-select { display: block; width: 100%; margin: 5px 0 7px; }
+#quality-description { font-size: 12px; }
+.creation-profile { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 13px; align-items: center; }
+.creation-profile img { width: 72px; height: 85px; object-fit: contain; object-position: bottom; background: #293f34; border: 1px solid #695d45; border-radius: 4px; }
+.creation-profile input { width: 100%; margin-top: 5px; }
+.creation-profile p { margin-bottom: 6px; font-size: 12px; }
+.origin-options { border: 0; padding: 0; margin: 11px 0; }
+.origin-options legend { padding: 0; color: var(--gold); }
+.origin-options label { display: flex; gap: 8px; align-items: center; min-height: 46px; border: 1px solid #4f6356; border-radius: 5px; background: #24372e; padding: 5px 8px; margin-top: 5px; cursor: pointer; }
+.origin-options label:has(input:checked) { background: #3f4834; border-color: #9f9168; }
+.origin-options input { accent-color: #dbbd84; }
+.origin-options small, .inventory small { display: block; color: #b8ccba; font-size: 10px; }
+#character-error:not(:empty) { margin: 8px 0; color: #ffbda7; }
+.inventory { margin: 12px 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.inventory li { display: flex; align-items: center; justify-content: space-between; gap: 7px; min-height: 54px; padding: 5px 7px; border: 1px solid #4f6356; border-radius: 5px; background: #22362c; }
+.inventory li > span { font-size: 11px; color: var(--gold); white-space: nowrap; }
+.bag-trust { margin-top: 5px; font-size: 11px; color: var(--gold); }
+
+@media (max-width: 760px) {
+  #intro::after { inset: 8px; }
+  .opening-content { padding: 6%; }
+  .playing .shell { padding-top: 12px; }
+  .playing .masthead { margin-bottom: 12px; }
+  .dialogue-card { gap: 9px; }
+  .dialogue-portrait { width: 56px; height: 76px; }
+  .play-panel { padding: 11px; }
+  .play-panel h3 { font-size: 23px; }
+  .play-panel .actions { gap: 5px; }
+  .actions .button { padding-inline: 9px; }
+  .battle-title > div:last-child { min-width: 64px; }
+  .side-task, .bag-button { font-size: 11px; }
+}
+@media (max-width: 340px) {
+  .dialogue-portrait { width: 44px; height: 65px; }
+  .topbar-inner { gap: 6px; }
+  .brand { font-size: 18px; }
+  .brand small { font-size: 7px; }
+  .share { padding-inline: 6px; }
+  .share span { display: none; }
+}
+button[aria-pressed="true"] { border-color: #bda36d; color: #f4d99f; }
+.nearby-hint { display: none; position: absolute; left: 50%; bottom: 11px; transform: translateX(-50%); border: 1px solid #a08a60; border-radius: 3px; background: #15231de8; color: #f6dca6; padding: 4px 8px; font-size: 11px; pointer-events: none; }
+@media (pointer: fine) {
+  #world[data-near-target="true"] + .nearby-hint { display: block; }
+}

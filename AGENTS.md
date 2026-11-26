@@ -8,3 +8,11 @@
 - Đặt cảnh, hội thoại và tham chiếu ảnh riêng trong module của chương. Thêm chương qua import động trong `src/chapters/load.ts`. Giữ lớp hiển thị và cách điều khiển dùng chung.
 - Dùng tranh WebP tối ưu, kiểm tra lưu lượng tải rỗng cache và xác minh trên cả bàn phím lẫn cảm ứng. Hủy cảnh cũ khi chuyển chương.
 - Cloudflare Pages nhận thư mục `dist`. Quy trình tạo bản build không cần tài khoản Cloudflare, công cụ backend hay dịch vụ trả phí.
+
+## Tiếp tục từ V0.5
+
+- Đối chiếu `MASTER_PROMPT.md` và `REQUIREMENTS_MATRIX.md` trước khi thay thiết kế. Khi chưa có nguyên văn V3.0, giữ mốc truyện và ghi rõ giả định.
+- Kiểm tra quy tắc nhân vật và save trong `src/game/character.ts` và `src/game/state.ts`. Khóa lưu giữ nguyên để dữ liệu v1 chuyển lên v2.
+- Chạy `npm run typecheck` trước khi build. Kịch bản hiện chưa có lệnh lint. Có thể lấy ảnh từ Playwright bằng `JOURNEY_SCREENSHOT_DIR`, với đường dẫn nằm ngoài `src` và `public`.
+- Dùng `tools/measure.mjs` theo `PERFORMANCE.md`. Đổi cấu hình hoặc chương phải dọn world hiện tại trước khi tạo world khác. Không đổi cấu hình tự động giữa trận.
+- Cập nhật PR #1 trong nhánh `dev/chapter-01` theo quy trình Phase 2, kiểm thử trên Cloud và dùng `DEPLOYMENT.md` khi đã có quyền Preview.

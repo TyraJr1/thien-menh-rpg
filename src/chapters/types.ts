@@ -11,6 +11,7 @@ export interface Interaction {
   label: string;
   objective: string;
   sprite?: string;
+  portrait?: string;
   lines: (state: GameState) => string[];
   choices: Choice[];
 }
@@ -20,7 +21,7 @@ export interface Chapter {
   edition: string;
   title: string;
   location: string;
-  background: string;
+  sideQuest?: Interaction;
   scenes: Interaction[];
   ending: string;
 }
