@@ -4,3 +4,5 @@ playwright-report/
 test-results/
 .asset-work/
 .DS_Store
+
+.wrangler/

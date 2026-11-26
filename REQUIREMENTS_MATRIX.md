@@ -26,7 +26,7 @@ Nguồn đối chiếu là yêu cầu Phase 2 và commit nền `1465e20`. Tài l
 | Hiệu năng, thiết lập Low/Medium/High/Auto | Đã hoàn thành | Chất lượng đổi độ phân giải, ảnh và renderer/hiệu ứng. Auto chọn theo thiết bị và hạ khi FPS thấp. Có phép đo Cloud, giới hạn được ghi trong `PERFORMANCE.md`. |
 | Tải tài nguyên và giải phóng cảnh | Đã hoàn thành | Module, ảnh theo chương, không precache offline; test trình duyệt xác nhận cô lập lần tải, hủy Phaser khi đổi cảnh. |
 | Chia sẻ URL và QR | Đã hoàn thành | QR sinh từ origin thật của bản đang chạy. Test trên địa chỉ preview nội bộ Cloud. |
-| Cloudflare Pages Preview HTTPS | Chưa triển khai | Chưa có project hoặc quyền xác thực Pages trong phiên. Có hướng dẫn `DEPLOYMENT.md`. |
+| Cloudflare HTTPS | Hoàn thành một phần | Worker đã kết nối Git theo cấu hình hiện tại. Có Wrangler Static Assets và quy trình xác minh bản deploy trong `DEPLOYMENT.md`. |
 | Chapter 02, hệ RPG mở rộng | Thuộc phiên bản tương lai | Điểm mở khóa đã có. Nội dung Chapter 02 chờ V3.0 và xác nhận trước khi mở rộng. |
 
 Các lỗi ưu tiên được xử lý gồm save hỏng không có phản hồi, nhả phím nhưng nhân vật còn trôi, người chơi mobile không thấy tài nguyên trong trận nếu bảng bên nằm dưới màn hình, panel thoại mất khỏi khung nhìn và cảnh mới có thể khởi tạo trước khi cảnh cũ dọn xong. Phần so sánh chất lượng hình ảnh xem `ART_DIRECTION.md`.

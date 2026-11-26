@@ -1,42 +1,35 @@
-# Cloudflare Pages Preview
+# Cloudflare Workers Static Assets
 
-Hiện chưa có project Pages hoặc xác thực Cloudflare trong phiên Cloud này. Dự án đã build được và `dist` là nội dung tĩnh hoàn chỉnh. Mọi bước dưới đây dùng gói miễn phí tiêu chuẩn. Không nhập token trong repository.
+Worker `thien-menh-rpg` lấy mã từ `TyraJr1/thien-menh-rpg`. Mỗi push lên `dev/chapter-01` kích hoạt Workers Builds theo cấu hình Git hiện tại.
 
-## Tạo preview từ GitHub
-
-1. Đăng nhập [Cloudflare Dashboard](https://dash.cloudflare.com), vào **Workers & Pages → Create application → Pages → Connect to Git**. Chọn GitHub và cấp quyền ứng dụng Cloudflare cho riêng repository `TyraJr1/thien-menh-rpg`.
-2. Chọn repository. Đặt **Production branch** là `main`, **Framework preset** là **Vite** nếu có. Nếu không thấy preset Vite, chọn **None** và điền đúng cấu hình bên dưới.
-3. Trong **Build and deployments → Branch control**, tắt **Automatic production branch deployments** nếu giao diện cho phép trước khi triển khai. Ở **Preview branch**, chọn **Custom branches** và chỉ bật `dev/chapter-01`.
-4. Trước khi xác nhận lần đầu, xem nhánh mà dashboard định triển khai. Nếu nút **Save and Deploy** chỉ chạy `main` và chưa có cách tắt, dừng ở đó. Một người có quyền có thể tạo project Pages dùng Direct Upload và đẩy một nhánh không phải production theo hướng dẫn bên dưới.
-5. Mở thẻ **Deployments**, chọn lần chạy **Preview** cho `dev/chapter-01`, kiểm tra SHA trùng với PR #1 rồi mở URL HTTPS mà Pages trả về. Các commit sau khi kết nối sẽ kích hoạt preview theo cấu hình nhánh.
-
-| Cấu hình | Giá trị |
+| Thiết lập Workers Builds | Giá trị |
 | --- | --- |
+| Worker | `thien-menh-rpg` |
+| Production branch | `dev/chapter-01` |
+| Root directory | `/` (gốc repository) |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
-| Root directory | Gốc repository |
-| Node.js | 22 hoặc mới hơn. `.node-version` đã chọn 22. |
-| Production branch | `main` |
-| Preview branch | `dev/chapter-01` |
-| Biến môi trường game | Không có |
+| Deploy command | `npx wrangler deploy --assets=./dist` |
+| Node.js | `22`, từ `22.12.0` trở lên |
 
-## Direct Upload nếu cần kiểm soát lần triển khai đầu tiên
+`wrangler.jsonc` khai báo tên Worker và thư mục `./dist`. Lệnh deploy hiện tại cũng chỉ định cùng thư mục. Wrangler được khóa trong `package-lock.json`. Ứng dụng phục vụ HTML và asset tĩnh, không cần mã Worker hay binding. Các URL không tồn tại trả 404. `public/_headers` được Vite chép vào `dist`; Cloudflare dùng tệp này để đặt cache dài hạn cho tệp băm trong `/assets/` và kiểm tra lại cache của trang gốc.
 
-Chỉ dùng khi đã có tên project Pages sử dụng Direct Upload và quyền **Cloudflare Pages: Edit** trong đúng tài khoản. Trong Codex Cloud, build rồi dùng Wrangler với phiên xác thực đã cấu hình:
+## Kiểm tra trước khi push
 
 ```sh
 npm ci
+npm run typecheck
+npm test
 npm run build
-npx wrangler pages deploy dist --project-name TEN_PROJECT --branch dev/chapter-01
+PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:e2e
+npx wrangler deploy --assets=./dist --dry-run
 ```
 
-Trước khi chạy, xác nhận nhánh production của project là `main`, và URL được trả về thuộc lần deploy Preview. Không thể đổi một project Git integration sang Direct Upload trên cùng cấu hình. Direct Upload là phương án cho một project thích hợp đã được xác thực, không phải yêu cầu thay đổi chế độ của project hiện hữu.
+Chạy các lệnh trong Codex Cloud. Dry run xác minh cấu hình và đóng gói, không tạo deployment. Việc triển khai dùng push Git và đường chạy Workers Builds hiện hữu. Các yêu cầu tới Static Assets được Cloudflare phục vụ miễn phí; Workers Builds vẫn có hạn mức riêng của gói Free.
 
-## Nghiệm thu từ URL HTTPS
+## Kiểm tra lần triển khai
 
-- Mở URL Preview và vào game. Xác nhận HTML, JS và WebP trả đúng loại nội dung, không có yêu cầu đến tài nguyên của chương chưa vào.
-- Kiểm tra cú chạm, bảng thoại, combat và lưu rồi tải lại trên điện thoại. Nếu cần preview chỉ dành cho nhóm thử, chú ý yêu cầu đăng nhập khi mở QR.
-- Chọn **Chia sẻ** trên đúng URL Preview, kiểm tra giá trị trong ô URL, rồi quét QR trên thiết bị khác. Không dùng QR từ địa chỉ nội bộ Cloud để chia sẻ bên ngoài.
-- Cache trong `public/_headers` chỉ giữ dài hạn các tệp `/assets/*` có tên băm. Trang gốc yêu cầu kiểm tra lại trước khi dùng cache.
+1. Trên GitHub, mở check **Workers Builds: thien-menh-rpg** của commit vừa push. Dùng liên kết **Details** để xem build tương ứng trong Cloudflare. Nếu bước build báo không tìm thấy cấu hình, kiểm tra thư mục gốc của build và commit đang chạy. Tên trong `wrangler.jsonc` phải khớp tên Worker.
+2. Sau khi check báo thành công, lấy URL HTTPS từ **Settings → Domains & Routes** của Worker. Mở trang gốc, xác nhận game và các tệp JS/WebP tải đúng.
+3. Chọn **Chia sẻ**. URL hiển thị và mã QR phải mở trang gốc của tên miền đang dùng. Nếu đang kiểm tra bản nội bộ của Wrangler thì QR chỉ trỏ đến địa chỉ của bản đó.
 
-Tài liệu chính thức: [Git integration](https://developers.cloudflare.com/pages/configuration/git-integration/), [Branch controls](https://developers.cloudflare.com/pages/configuration/branch-build-controls/), [Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/).
+[Wrangler Static Assets](https://developers.cloudflare.com/workers/static-assets/) · [Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/) · [Hạn mức build](https://developers.cloudflare.com/workers/ci-cd/builds/limits-and-pricing/)
