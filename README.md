@@ -1,5 +1,13 @@
 # Thiên Mệnh — Hành Trình Giang Hồ
 
+Bản thử Babylon.js theo [Master Prompt V4.0](MASTER_PROMPT.md) nằm ở `/` của bản build nhánh `feature/3d-action-rpg`. Mở `/legacy.html` cho bản Phaser. Worker công khai tiếp tục chạy nhánh V0.5.
+
+**Bản thử 3D.** WASD để di chuyển, Shift sprint, Space nhảy, C né, F tương tác. Kéo chuột hoặc vuốt để xoay camera. Trên điện thoại dùng cần trái và cụm nút phải. Gặp Lão Chu, xem đèn đá rồi thử kiếm ở bãi tập.
+
+[Mỹ thuật 3D](ART_DIRECTION_3D.md) · [Tài nguyên](ASSET_REQUIREMENTS.md) · [Ảnh và kiểm thử](docs/three/README.md) · [Đánh giá Pixel Streaming](CLOUD_GAMING_FUTURE.md)
+
+## Bản V0.5 (2.5D)
+
 RPG kiếm hiệp 2.5D trên trình duyệt. Bản đầu tiên có Khúc dạo **Đêm ở bến Vân Thủy** và Chương 01 **Sương trên Tàng Phong**.
 
 - Dùng **A/D** hoặc **←/→** để di chuyển và **E** khi đến gần dấu ◆. Trên điện thoại, chạm cảnh hoặc dùng nút **Đến mục tiêu**.

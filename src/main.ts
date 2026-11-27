@@ -415,7 +415,7 @@ async function share() {
     <label for="share-url">Liên kết trò chơi</label>
     <div class="share-field"><input id="share-url" type="url" readonly><button class="button gold" data-action="copy">Sao chép</button></div>
     <p id="copy-status" role="status"></p>`);
-  const url = new URL(import.meta.env.BASE_URL, location.origin).href;
+  const url = new URL(location.pathname.endsWith('/legacy.html') ? location.pathname : import.meta.env.BASE_URL, location.origin).href;
   byId<HTMLInputElement>('share-url').value = url;
   const output = byId('qr');
   try {

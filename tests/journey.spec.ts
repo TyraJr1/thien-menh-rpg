@@ -34,7 +34,7 @@ test('play both chapters and fetch only the current chapter assets @desktop', as
   const errors: string[] = [];
   page.on('request', request => { requested.push(request.url()); });
   page.on('pageerror', error => { errors.push(error.message); });
-  await page.goto('/');
+  await page.goto('/legacy.html');
   await expect(page.getByRole('heading', { name: 'Hành trình giang hồ', exact: true })).toBeVisible();
   await expect(page.locator('.opening-bg')).toBeVisible();
   await capture(page, 'main-menu');
@@ -129,7 +129,7 @@ test('touch controls, persisted alternate choice and QR @mobile', async ({ page 
     if (!localStorage.getItem('thien-menh.save.v1')) localStorage.setItem('thien-menh.save.v1', '{broken');
     if (!localStorage.getItem('thien-menh.quality')) localStorage.setItem('thien-menh.quality', 'medium');
   });
-  await page.goto('/');
+  await page.goto('/legacy.html');
   await expect(page.getByText(/Tiến độ cũ bị lỗi/)).toBeVisible();
   await createTraveler(page, 'Tiểu Trúc', 'guardian');
   await expect(page.locator('#hp-stat progress')).toHaveAttribute('max', '42');
@@ -170,7 +170,7 @@ test('touch controls, persisted alternate choice and QR @mobile', async ({ page 
   expect(noHorizontalScroll).toBe(true);
   await page.getByRole('button', { name: 'Chia sẻ', exact: true }).tap();
   await expect(page.getByRole('dialog').getByRole('img', { name: /Mã QR/ })).toBeVisible();
-  await expect(page.getByLabel('Liên kết trò chơi')).toHaveValue('http://127.0.0.1:4174/');
+  await expect(page.getByLabel('Liên kết trò chơi')).toHaveValue('http://127.0.0.1:4174/legacy.html');
 });
 
 test('defeat and retry preserve the encounter @desktop', async ({ page }) => {
@@ -180,7 +180,7 @@ test('defeat and retry preserve the encounter @desktop', async ({ page }) => {
     localStorage.setItem(saveKey, JSON.stringify(save));
     localStorage.setItem('thien-menh.quality', 'low');
   }, { saveKey, save });
-  await page.goto('/');
+  await page.goto('/legacy.html');
   await action(page, 'Tiếp tục hành trình').click();
   await action(page, 'Thủ thế').click();
   await expect(page.getByText(/Bạn kiệt sức/)).toBeVisible();

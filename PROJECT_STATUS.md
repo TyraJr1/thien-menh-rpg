@@ -17,3 +17,8 @@ Bản chơi thử nối tiếp commit nền `1465e20` trong nhánh `dev/chapter-
 3. Chơi trọn luồng trên thiết bị thật để xác nhận thao tác cảm ứng, chữ, FPS và ổn định. Đối chiếu [chỉ đạo mỹ thuật](ART_DIRECTION.md) với tiêu chuẩn nội dung của nhóm.
 
 Cấu hình triển khai hiện hành dùng Cloudflare Workers Static Assets từ `dev/chapter-01`. Music, nhiều pose nhân vật, các ô trang bị khác và nội dung Chapter 02 nằm ở lộ trình.
+
+
+## Foundation V4.0
+
+Nhánh `feature/3d-action-rpg` lấy từ commit production `d2bfc6d` và triển khai Phase A cùng phần đầu Phase B tại bến Vân Thủy. Giữ bản 2.5D tại `legacy.html` trong bản build thử. Xem [kết quả 3D](docs/three/README.md). Phase C/D còn Khách áo đen, boss, combat đầy đủ và nối sang Chương 01.

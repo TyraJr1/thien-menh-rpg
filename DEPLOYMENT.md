@@ -33,3 +33,8 @@ Chạy các lệnh trong Codex Cloud. Dry run xác minh cấu hình và đóng g
 3. Chọn **Chia sẻ**. URL hiển thị và mã QR phải mở trang gốc của tên miền đang dùng. Nếu đang kiểm tra bản nội bộ của Wrangler thì QR chỉ trỏ đến địa chỉ của bản đó.
 
 [Wrangler Static Assets](https://developers.cloudflare.com/workers/static-assets/) · [Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/) · [Hạn mức build](https://developers.cloudflare.com/workers/ci-cd/builds/limits-and-pricing/)
+
+
+## Nhánh thử nghiệm 3D
+
+Worker production tiếp tục nhận `dev/chapter-01`. Với `feature/3d-action-rpg`, kiểm tra `npm run build` và `npx wrangler deploy --assets=./dist --dry-run`. Dùng bản preview theo nhánh nếu Cloudflare cung cấp; không phát hành lên Worker production bằng Wrangler.
