@@ -1,6 +1,6 @@
 # Phát triển Thiên Mệnh
 
-- Dùng checkout của Codex Cloud. Xác nhận đúng remote và nhánh trước khi sửa. Giữ thay đổi của người dùng và đẩy lên nhánh làm việc để mở PR vào `main`.
+- Dùng checkout của Codex Cloud. Xác nhận đúng remote và nhánh trước khi sửa. Giữ thay đổi của người dùng và làm việc trên đúng nhánh đã yêu cầu.
 - Cài đúng phiên bản đã khóa với `npm ci` trên Node.js 22 trở lên. Chạy `npm run dev -- --host 0.0.0.0` khi phát triển.
 - Chạy `npm test`, `npm run build`, rồi `npm run test:e2e`. Trên Cloud có Chromium hệ thống, đặt `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium`; nếu thiếu thì dùng trình duyệt Playwright được cài qua `npx playwright install chromium`.
 - Đọc `GAME_DESIGN.md` và `STORY_BIBLE.md` trước khi sửa luồng chơi. Khi có Master Prompt, đối chiếu các tên, lời thoại và quy tắc trước khi coi chúng là thiết kế đã chốt.
@@ -16,3 +16,10 @@
 - Chạy `npm run typecheck` trước khi build. Kịch bản hiện chưa có lệnh lint. Có thể lấy ảnh từ Playwright bằng `JOURNEY_SCREENSHOT_DIR`, với đường dẫn nằm ngoài `src` và `public`.
 - Dùng `tools/measure.mjs` theo `PERFORMANCE.md`. Đổi cấu hình hoặc chương phải dọn world hiện tại trước khi tạo world khác. Không đổi cấu hình tự động giữa trận.
 - Cập nhật PR #1 trong nhánh `dev/chapter-01` theo quy trình Phase 2, kiểm thử trên Cloud và dùng `DEPLOYMENT.md` để kiểm tra Workers Builds và URL công khai.
+
+
+## Nhánh 3D V4.0
+
+- Dùng `feature/3d-action-rpg` và PR nháp vào `dev/chapter-01`. Không đẩy hoặc triển khai 3D lên nhánh production.
+- `/` chạy Babylon.js, `/legacy.html` chạy Phaser. Tiến trình hai chế độ lưu riêng.
+- Chạy `npm test`, `npm run build` và `npm run test:e2e` trên Cloud. Dùng `?renderer=webgl` để thử WebGL 2. Chỉ chạy Wrangler `--dry-run` cho nhánh 3D trừ khi đã có môi trường thử riêng và quyền phù hợp.

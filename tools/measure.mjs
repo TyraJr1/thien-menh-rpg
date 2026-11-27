@@ -3,7 +3,7 @@ import { readdir, readFile, stat } from 'node:fs/promises';
 import { chromium } from 'playwright';
 import { advance, enterChapter, newGame, playMove, saveKey, startCombat } from '../src/game/state.ts';
 
-const url = process.env.JOURNEY_PREVIEW_URL ?? 'http://127.0.0.1:4180';
+const url = process.env.JOURNEY_PREVIEW_URL ?? 'http://127.0.0.1:4180/legacy.html';
 const assets = await readdir('dist/assets');
 const assetSizes = await Promise.all(assets.map(async name => [name, (await stat(`dist/assets/${name}`)).size]));
 const total = assetSizes.reduce((sum, [, bytes]) => sum + bytes, 0)

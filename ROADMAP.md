@@ -12,3 +12,11 @@
 2. Xác minh lần triển khai Cloudflare Workers, kiểm tra liên kết HTTPS và QR, thử trên điện thoại Android/iOS thật và đo hiệu năng ngoài Chromium headless.
 3. Bổ sung sprite nhiều pose, biểu cảm thoại và âm thanh môi trường. Mở rộng trang bị, tiến triển võ công và quan hệ sinh động hơn khi V3.0 đã xác nhận.
 4. Chỉ mở thêm nội dung Chapter 02 sau khi hai chương đầu đạt các tiêu chí trên. Save V0.5 đã có điều kiện để nối chương sau.
+
+
+## Sau foundation V4.0
+
+1. Đo lại trên WebGPU và GPU thật, tinh chỉnh IK và camera tại các khúc hẹp.
+2. Dựng Khách áo đen và boss, nối combo, stagger, báo đòn và phần thưởng.
+3. Hoàn chỉnh quest, cutscene, chuyển khu vực và các mốc sang Chương 01.
+4. Tách asset theo khu và đánh giá bản preview riêng trước khi phát hành.
