@@ -60,8 +60,8 @@ class Sculpt {
     }
     for(let i=0;i<n;i++){
       const j=(i+1)%n;
-      this.quad(levels[0][j],levels[0][i],levels[1][i],levels[1][j],grade(c,.68+roll()*.11));
-      this.quad(levels[1][j],levels[1][i],levels[2][i],levels[2][j],grade(c,.85+roll()*.17));
+      this.quad(levels[0][i],levels[0][j],levels[1][j],levels[1][i],grade(c,.79+roll()*.13));
+      this.quad(levels[1][i],levels[1][j],levels[2][j],levels[2][i],grade(c,.88+roll()*.17));
       this.face(levels[2][i],levels[2][j],[x-.09*w,y+h,z],grade(c,1.02+roll()*.15));
     }
   }
@@ -89,10 +89,10 @@ function paintTexture(scene:Scene,name:string,width:number,height:number,draw:(c
 }
 
 function earth(scene:Scene) {
-  const grid=new Sculpt(),uv:number[]=[],width=116,rows=137;
+  const grid=new Sculpt(),uv:number[]=[],width=86,rows=98;
   const soil=tint('#a48f68'), grasses=tint('#748d55'), silt=tint('#5e7663');
   for(let j=0;j<=rows;j++)for(let i=0;i<=width;i++){
-    const z=-24+j*1.04,x=(i-width/2)*.82,y=ground(x,z);
+    const z=-24+j*1.46,x=(i-width/2)*1.10,y=ground(x,z);
     const path=Math.max(0,Math.min(1,(Math.abs(x-pathX(z))-1.25)/2.7));
     const color=y<-.58?silt:lerp(soil,grasses,path);
     grid.point([x,y,z],grade(color,.91+.080*Math.sin(.69*x+.74*z)+.047*Math.cos(x*1.41-z*.37)));
@@ -193,7 +193,7 @@ function buildVillage(scene:Scene,mat:StandardMaterial) {
   for(const {x,z,w,d,h,tall} of houses) {
     const y=ground(x,z)+.21;
     g.box(x,y-.17,z,w+.48,.54,d+.48,stone);g.box(x,y+.035,z,w+.56,.16,d+.55,grade(stone,1.14));
-    g.box(x,y+h*.50,z,w,d>0?h*.96:h,d,plaster);
+    g.box(x,y+h*.50,z,w,h*.96,d,plaster);
     for(const a of [-w/2,0,w/2])for(const b of [-d/2,d/2])g.box(x+a,y+h*.53,z+b,.22,h,.22,timber);
     for(const b of [-d/2,d/2]){
       g.box(x,y+h-.17,z+b,w+.25,.28,.18,timber);g.box(x,y+h-.41,z+b,w,.096,.19,brass);

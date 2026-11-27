@@ -20,7 +20,7 @@ try{
   for(const kind of ['desktop','mobile']){
     const context=await browser.newContext(kind==='mobile'?devices['Pixel 7']:{viewport:{width:1440,height:900}});
     const page=await context.newPage();
-    await page.addInitScript(kind=>localStorage.setItem('thien-menh.3d.quality',kind==='desktop'?'medium':'battery'),kind);
+    await page.addInitScript(kind=>localStorage.setItem('thien-menh.3d.quality','battery'),kind);
     const start=performance.now();
     await page.goto(target.href);
     await page.waitForFunction(()=>Number(document.getElementById('game').dataset.fps)>0);

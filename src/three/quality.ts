@@ -1,6 +1,6 @@
 export const presets = {
-  battery:{name:'Battery Saver',scale:.62,fps:30,plants:1,shadow:0},
-  low:{name:'Low',scale:.74,fps:45,plants:1,shadow:0},
+  battery:{name:'Battery Saver',scale:.48,fps:30,plants:1,shadow:0},
+  low:{name:'Low',scale:.69,fps:45,plants:1,shadow:0},
   medium:{name:'Medium',scale:.88,fps:60,plants:2,shadow:0},
   high:{name:'High',scale:1,fps:60,plants:3,shadow:768},
   ultra:{name:'Ultra',scale:1.18,fps:60,plants:3,shadow:1280},

@@ -29,7 +29,7 @@ export type Mode='menu'|'loading'|'play'|'dialogue'|'paused';
 type Clip='Idle'|'Walk'|'Run'|'Jump'|'Land'|'Dodge'|'Slash'|'Sweep';
 export interface Frame {
   x:number;y:number;z:number;yaw:number; speed:number; grounded:boolean; fps:number; clearance:number;
-  stamina:number; qi:number; clip:Clip; hits:number;
+  stamina:number; qi:number; clip:Clip; hits:number; jumpPeak:number;
 }
 interface Hooks { act:(code:string)=>void; frame:(frame:Frame)=>void; quality:(p:Preset)=>void; hit:(count:number)=>void }
 
@@ -125,9 +125,12 @@ export async function createWorld(original:HTMLCanvasElement,stick:HTMLElement,m
   const player=spawnBody(spawn.x,spawn.z);
   hero.root.position.set(player.x,player.y,player.z);hero.pose('Idle');
   let fisher:typeof hero|undefined,preparation:Promise<void>|undefined,shadowMap:ShadowGenerator|undefined;
-  let requested=quality,preset=selectPreset(quality),target:Target='ferry',mode:Mode='menu';
+  const software=engine instanceof Engine && /swiftshader|llvmpipe|software/i.test(engine.getGlInfo().renderer);
+  const preferred=(value:Quality)=>value==='auto'&&software?'battery':selectPreset(value);
+  let requested=quality,preset=preferred(quality),target:Target='ferry',mode:Mode='menu';
   let yaw=0,wantedYaw=0,pitch=.17,wantedPitch=.17,zoom=5.25,clearance=5.25,locked=false;
   let now=performance.now(),nextUpdate=0,sampleAt=now,frames=0,fps=0,elapsed=0,poorIntervals=0;
+  let jumpStart=player.y,jumpPeak=0;
   let leap=false,dodge=false,clip:Clip='Idle',landUntil=0,slashUntil=0,strikeAt=0,qi=5,hits=0;
   const eye=new Vector3(player.x,player.y+1.3,player.z),arm=new Vector3(),identity=Matrix.Identity(),viewport=new Viewport(0,0,1,1);
 
@@ -154,7 +157,7 @@ export async function createWorld(original:HTMLCanvasElement,stick:HTMLElement,m
     hooks.quality(preset);
   }
   const snapshot=():Frame=>({x:player.x,y:player.y,z:player.z,yaw,speed:Math.hypot(player.vx,player.vz),grounded:player.grounded,
-    fps,clearance,stamina:player.stamina,qi,clip,hits});
+    fps,clearance,stamina:player.stamina,qi,clip,hits,jumpPeak});
   function view(dt:number){
     if(mode==='dialogue'&&target==='ferry'){
       const npc=destinations.ferry,y=surface(npc.x,npc.z);
@@ -186,14 +189,16 @@ export async function createWorld(original:HTMLCanvasElement,stick:HTMLElement,m
     if(!marker.hidden){marker.style.left=`${result.x*100}%`;marker.style.top=`${result.y*100}%`;}
   }
   function animate(){
-    const time=performance.now(),dt=cap((time-now)/1000,.001,.19);
+    const time=performance.now(),dt=cap((time-now)/1000,.001,.26);
     now=time;elapsed+=dt;
     if(mode==='play'){
       const movement=input.read();
       let speed=0;
       const count=Math.ceil(dt/.025);
+      if(leap&&player.grounded&&!player.dash){jumpStart=player.y;jumpPeak=0;}
       for(let i=0;i<count;i++){
         const state=move(player,{...movement,jump:i===0&&leap,dodge:i===0&&dodge},yaw,dt/count);
+        if(!player.grounded)jumpPeak=Math.max(jumpPeak,player.y-jumpStart);
         if(state.landed)landUntil=elapsed+.205;
         speed=state.speed;
       }
@@ -244,7 +249,7 @@ export async function createWorld(original:HTMLCanvasElement,stick:HTMLElement,m
       if(next!=='play'){hero.pose('Idle');clip='Idle';strikeAt=0;slashUntil=0;trail.setEnabled(false);}
     },
     target(next:Target){target=next;},
-    quality(next:Quality){requested=next;poorIntervals=0;apply(selectPreset(next));},
+    quality(next:Quality){requested=next;poorIntervals=0;apply(preferred(next));},
     lock(){locked=!locked;return locked;},
     jump(){if(mode==='play')leap=true;},
     dodge(){if(mode==='play')dodge=true;},

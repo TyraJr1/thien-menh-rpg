@@ -145,7 +145,7 @@ function map(canvas:HTMLCanvasElement,pos:Frame,broad:boolean){
 function onFrame(next:Frame){
   frame=next;
   Object.assign(app.dataset,{x:next.x.toFixed(3),y:next.y.toFixed(3),z:next.z.toFixed(3),yaw:next.yaw.toFixed(3),
-    speed:next.speed.toFixed(2),grounded:String(next.grounded),fps:next.fps.toFixed(1),clip:next.clip,hits:String(next.hits),clearance:next.clearance.toFixed(3)});
+    jumpPeak:next.jumpPeak.toFixed(3),speed:next.speed.toFixed(2),grounded:String(next.grounded),fps:next.fps.toFixed(1),clip:next.clip,hits:String(next.hits),clearance:next.clearance.toFixed(3)});
   if(mode!=='play')return;
   const goal=target(),d=distance(next,destinations[goal]);
   el('range').textContent=practice?'':`${Math.round(d)} m`;

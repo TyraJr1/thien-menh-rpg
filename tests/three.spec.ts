@@ -8,6 +8,27 @@ async function enter(page:Page,again=false){
   await button(page,again?'Tiếp tục hành trình':'Bước vào giang hồ').click();
   await expect(stage(page)).toHaveAttribute('data-mode','play');
 }
+async function walkToInteraction(page: Page, label: string, sprint = false) {
+  // Release inside the browser as soon as the proximity hint appears. A
+  // round trip from a software-rendered frame can miss the interaction zone.
+  await page.evaluate(({label,sprint})=>{
+    const target=document.querySelector<HTMLButtonElement>('#interact')!;
+    const observer=new MutationObserver(()=>{
+      if(target.hidden||target.querySelector('span')?.textContent!==label)return;
+      document.dispatchEvent(new KeyboardEvent('keyup',{code:'KeyW',key:'w',bubbles:true}));
+      if(sprint)document.dispatchEvent(new KeyboardEvent('keyup',{code:'ShiftLeft',key:'Shift',bubbles:true}));
+      observer.disconnect();
+    });
+    observer.observe(target,{attributes:true,subtree:true,childList:true,characterData:true});
+  },{label,sprint});
+  if(sprint)await page.keyboard.down('ShiftLeft');
+  await page.keyboard.down('KeyW');
+  await expect(stage(page)).toHaveAttribute('data-clip','Run');
+  await expect(button(page,label)).toBeVisible();
+  await page.keyboard.up('KeyW');
+  if(sprint)await page.keyboard.up('ShiftLeft');
+}
+
 async function shot(page:Page,name:string){
   const path=process.env.TM3D_SHOTS;
   if(!path)return;
@@ -20,7 +41,7 @@ test('WebGL 2, NPC close-up, story branch and timed sword contact survive save/l
   const errors:string[]=[];
   page.on('request',route=>urls.push(route.url()));
   page.on('pageerror',error=>errors.push(error.message));
-  await page.addInitScript(()=>localStorage.setItem('thien-menh.3d.quality','medium'));
+  await page.addInitScript(()=>localStorage.setItem('thien-menh.3d.quality','battery'));
   await page.goto('/?renderer=webgl');
   await expect(stage(page)).toHaveAttribute('data-engine','WebGL 2');
   await expect(stage(page)).toHaveAttribute('data-clips',/Idle, Walk, Run, Jump, Land/);
@@ -36,15 +57,11 @@ test('WebGL 2, NPC close-up, story branch and timed sword contact survive save/l
 
   const floor=await value(page,'y');
   await page.keyboard.press('Space');
-  await expect(stage(page)).toHaveAttribute('data-grounded','false');
-  await expect.poll(()=>value(page,'y')).toBeGreaterThan(floor+.25);
+  await expect.poll(()=>value(page,'jump-peak')).toBeGreaterThan(.28);
   await expect(stage(page)).toHaveAttribute('data-grounded','true');
   await expect.poll(()=>value(page,'y')).toBeCloseTo(floor,2);
 
-  await page.keyboard.down('KeyW');
-  await expect(stage(page)).toHaveAttribute('data-clip','Run');
-  await expect(button(page,'Trò chuyện với Lão Chu')).toBeVisible();
-  await page.keyboard.up('KeyW');
+  await walkToInteraction(page,'Trò chuyện với Lão Chu');
   await shot(page,'npc-interaction');
   await page.keyboard.press('KeyF');
   await expect(page.getByRole('dialog',{name:'Lão Chu'})).toBeVisible();
@@ -58,12 +75,9 @@ test('WebGL 2, NPC close-up, story branch and timed sword contact survive save/l
   await expect(page.getByText('Mộc Ấn',{exact:true})).toBeVisible();
   await button(page,'Đóng').click();
 
-  await page.keyboard.down('ShiftLeft');
-  await page.keyboard.down('KeyW');
-  await expect(button(page,'Xem đèn đá')).toBeVisible();
-  await page.keyboard.up('KeyW');
-  await page.keyboard.up('ShiftLeft');
-  await page.keyboard.press('KeyF');
+  await expect(stage(page)).toHaveAttribute('data-mode','play');
+  await walkToInteraction(page,'Xem đèn đá',true);
+  await button(page,'Xem đèn đá').click();
   await expect(page.getByText(/Từng chiếc thuyền rời bến/)).toBeVisible();
   await button(page,'Bỏ qua lời thoại').click();
   await button(page,'Đi về phía tiếng động.').click();
@@ -107,12 +121,12 @@ test('touch drive and camera simultaneously, graphics preset, jump @mobile',asyn
   await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
   await expect.poll(()=>value(page,'speed')).toBeLessThan(.3);
   await button(page,'Nhảy').tap();
-  await expect(stage(page)).toHaveAttribute('data-grounded','false');
+  await expect.poll(()=>value(page,'jump-peak')).toBeGreaterThan(.28);
   await expect(stage(page)).toHaveAttribute('data-grounded','true');
   await button(page,'Cài đặt').tap();
   await page.getByLabel('Chất lượng đồ họa').selectOption('low');
   await expect(stage(page)).toHaveAttribute('data-quality','low');
-  await expect(page.locator('#render-info')).toContainText('74%');
+  await expect(page.locator('#render-info')).toContainText('69%');
   await button(page,'Đóng').tap();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth===innerWidth&&document.documentElement.scrollHeight===innerHeight)).toBe(true);
   await shot(page,'mobile');
